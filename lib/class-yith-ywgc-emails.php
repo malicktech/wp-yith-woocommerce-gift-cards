@@ -244,7 +244,15 @@ if ( ! class_exists ( 'YITH_YWGC_Emails' ) ) {
 				return;
 			}*/
 			
-			$shop_page_url = apply_filters( 'yith_ywgc_shop_page_url', get_permalink ( wc_get_page_id ( 'shop' ) ) ? get_permalink ( wc_get_page_id ( 'shop' ) ) : site_url () );
+			//@Luwee - debut
+		//$shop_page_url = apply_filters( 'yith_ywgc_shop_page_url', get_permalink ( wc_get_page_id ( 'shop' ) ) ? get_permalink ( wc_get_page_id ( 'shop' ) ) : site_url () );
+        $bookable_product_id = get_post_meta( $gift_card->product_id, 'bookable_product_id', true );
+			if(isset($bookable_product_id)) {
+				$shop_page_url = get_permalink( $bookable_product_id );
+			} else {
+				$shop_page_url = get_permalink( $gift_card->gift_card_number);
+			}
+			//@Luwee - fin
 
 			$args = array(
 				YWGC_ACTION_ADD_DISCOUNT_TO_CART => $gift_card->gift_card_number,
